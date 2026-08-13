@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Todo List App</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+                background: #eef1f5;
+                padding: 40px 20px;
+                color: #2c3e50;
+            }
+
+            h1 {
+                text-align: center;
+                margin-bottom: 28px;
+                color: #1a2b42;
+                font-size: 28px;
+                font-weight: 700;
+                letter-spacing: -0.5px;
+            }
+
+            #root > div {
+                max-width: 480px;
+                margin: 0 auto;
+                background: #ffffff;
+                padding: 28px;
+                border-radius: 12px;
+                box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            }
+
+            form {
+                display: flex;
+                gap: 10px;
+                margin-bottom: 20px;
+            }
+
+            input[type="text"] {
+                flex: 1;
+                padding: 10px 14px;
+                border: 1.5px solid #d1d5db;
+                border-radius: 8px;
+                font-size: 15px;
+                background: #f9fafb;
+                color: #333;
+                transition: border-color 0.2s;
+            }
+
+            input[type="text"]:focus {
+                outline: none;
+                border-color: #6366f1;
+                background: #fff;
+            }
+
+            input[type="text"]::placeholder {
+                color: #9ca3af;
+            }
+
+            button {
+                padding: 10px 20px;
+                border: none;
+                border-radius: 8px;
+                background: #6366f1;
+                color: #fff;
+                font-size: 14px;
+                font-weight: 600;
+                cursor: pointer;
+                transition: background-color 0.2s;
+            }
+
+            button:hover {
+                background: #4f46e5;
+            }
+
+            ul {
+                list-style: none;
+                margin-bottom: 20px;
+            }
+
+            li {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                padding: 12px 4px;
+                border-bottom: 1px solid #f0f0f0;
+                font-size: 15px;
+                color: #374151;
+            }
+
+            li:last-child {
+                border-bottom: none;
+            }
+
+            li input[type="checkbox"] {
+                width: 18px;
+                height: 18px;
+                accent-color: #6366f1;
+                cursor: pointer;
+                flex-shrink: 0;
+            }
+
+            .tasks.completed {
+                text-decoration: line-through;
+                color: #9ca3af;
+            }
+
+            p {
+                text-align: center;
+                color: #9ca3af;
+                padding: 24px 0;
+                font-size: 15px;
+            }
+
+            #root > div > div:last-child {
+                margin-top: 20px;
+                padding: 12px 16px;
+                background: #f3f4f6;
+                border-radius: 8px;
+                font-size: 13px;
+                color: #6b7280;
+                text-align: center;
+            }
+
+            #root > div > button:last-child {
+                width: 100%;
+                margin-top: 12px;
+                background: #ef4444;
+                padding: 10px;
+            }
+
+            #root > div > button:last-child:hover {
+                background: #dc2626;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="root"></div>
+        <script
+            crossorigin
+            src="https://unpkg.com/react@18/umd/react.development.js"
+        ></script>
+        <script
+            crossorigin
+            src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+        ></script>
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+        <script type="text/babel">
+            let uniqId = 0;
+
+            function TodoApp() {
+                const [inputValue, setInputValue] = React.useState("");
+                const [todos, setTodos] = React.useState([]);
+                const completedCount = todos.filter(
+                    (todo) => todo.completed,
+                ).length;
+                const remainingCount = todos.length - completedCount;
+
+                const handleInputChange = (e) => {
+                    setInputValue(e.target.value); // Lấy giá trị từ input
+                };
+
+                const handleSubmit = (e) => {
+                    e.preventDefault(); // Ngăn trang reload khi submit form
+                    if (inputValue.trim()) {
+                        setTodos([
+                            ...todos,
+                            {
+                                id: ++uniqId,
+                                text: inputValue,
+                                completed: false,
+                            },
+                        ]);
+                        setInputValue(""); // Reset input sau khi thêm
+                    }
+                };
+
+                return (
+                    <div>
+                        <form onSubmit={handleSubmit}>
+                            <input
+                                value={inputValue}
+                                onChange={handleInputChange}
+                                placeholder="Nhập task mới..."
+                            />
+                            <button type="submit">Thêm</button>
+                        </form>
+
+                        {todos.length === 0 ? (
+                            <p>Chưa có task nào. Hãy thêm task đầu tiên!</p>
+                        ) : (
+                            <ul>
+                                {todos.map((todo) => (
+                                    <li
+                                        className={
+                                            todo.completed
+                                                ? "tasks completed"
+                                                : "tasks"
+                                        }
+                                        key={todo.id}
+                                    >
+                                        <input
+                                            id={`todo-${todo.id}`}
+                                            type="checkbox"
+                                            checked={todo.completed}
+                                            onChange={() => {
+                                                setTodos(
+                                                    todos.map((item) =>
+                                                        item.id === todo.id
+                                                            ? {
+                                                                  ...item,
+                                                                  completed:
+                                                                      !item.completed,
+                                                              }
+                                                            : item,
+                                                    ),
+                                                );
+                                            }}
+                                        />
+
+                                        <label htmlFor={`todo-${todo.id}`}>
+                                            {todo.text}
+                                        </label>
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+
+                        <div>
+                            Tổng: {todos.length} task(s), Hoàn thành:{" "}
+                            {completedCount} task(s), Còn lại: {remainingCount}{" "}
+                            task(s)
+                        </div>
+
+                        <button onClick={() => setTodos([])}>Xóa</button>
+                    </div>
+                );
+            }
+
+            const app = (
+                <>
+                    <h1>Todo List App</h1>
+                    <TodoApp />
+                </>
+            );
+            const root = ReactDOM.createRoot(document.getElementById("root"));
+            root.render(app);
+        </script>
+    </body>
+</html>
