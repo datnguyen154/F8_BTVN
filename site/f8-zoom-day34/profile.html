@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Profile Card</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                background-color: #f0f2f5;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+                color: #333;
+            }
+
+            #root {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            h1 {
+                font-size: 28px;
+                color: #1a73e8;
+                margin-bottom: 24px;
+            }
+
+            #root > div {
+                background-color: #fff;
+                border-radius: 12px;
+                padding: 32px 40px;
+                box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+                width: 100%;
+                max-width: 420px;
+            }
+
+            h2 {
+                font-size: 22px;
+                color: #202124;
+                margin-bottom: 16px;
+                padding-bottom: 12px;
+                border-bottom: 2px solid #e8eaed;
+            }
+
+            p {
+                font-size: 15px;
+                line-height: 1.7;
+                color: #5f6368;
+            }
+
+            p::first-line {
+                color: #333;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="root"></div>
+        <script
+            crossorigin
+            src="https://unpkg.com/react@18/umd/react.development.js"
+        ></script>
+        <script
+            crossorigin
+            src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+        ></script>
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+        <script type="text/babel">
+            function Profile() {
+                const [user, setUser] = React.useState(null);
+
+                React.useEffect(() => {
+                    fetch("https://jsonplaceholder.typicode.com/users/1")
+                        .then((res) => res.json())
+                        .then((data) => {
+                            setUser(data);
+                        });
+                }, []);
+                if (!user) {
+                    return <p>Đang tải...</p>;
+                }
+
+                return (
+                    <div>
+                        <h2>{user.name}</h2>
+                        <p>Username: {user.username}</p>
+                        <p>Email: {user.email}</p>
+                        <p>Phone: {user.phone}</p>
+                        <p>Website: {user.website}</p>
+                        <p>
+                            Address: {user.address.street}, {user.address.city}
+                        </p>
+                    </div>
+                );
+            }
+
+            const app = (
+                <>
+                    <h1>User Profile</h1>
+                    <Profile />
+                </>
+            );
+            const root = ReactDOM.createRoot(document.getElementById("root"));
+            root.render(app);
+        </script>
+    </body>
+</html>
