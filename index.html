@@ -1,14 +1,171 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/f8-zoom-day35/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>f8-zoom-day35</title>
-    <script type="module" crossorigin src="/f8-zoom-day35/assets/index-If7ptLiG.js"></script>
-    <link rel="stylesheet" crossorigin href="/f8-zoom-day35/assets/index-Bm75U2HY.css">
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>F8 Bài tập</title>
+
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: Arial, sans-serif;
+                background: #eef2f7;
+                color: #1f2937;
+                min-height: 100vh;
+            }
+
+            .page-header {
+                background: #ffffff;
+                border-bottom: 1px solid #e5e7eb;
+                padding: 42px 20px 32px;
+                text-align: center;
+            }
+
+            .page-header h1 {
+                font-size: 34px;
+                margin-bottom: 10px;
+            }
+
+            .page-header p {
+                color: #6b7280;
+                font-size: 15px;
+            }
+
+            .container {
+                max-width: 1000px;
+                margin: 0 auto;
+                padding: 36px 20px;
+            }
+
+            .section-title {
+                font-size: 22px;
+                margin-bottom: 20px;
+            }
+
+            .day-list {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 20px;
+            }
+
+            .day-card {
+                display: block;
+                text-decoration: none;
+                color: inherit;
+                background: #ffffff;
+                border: 1px solid #e5e7eb;
+                border-radius: 12px;
+                padding: 22px;
+                min-height: 190px;
+                transition: 0.2s ease;
+            }
+
+            .day-card:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+                border-color: #c7d2fe;
+            }
+
+            .day-number {
+                display: inline-block;
+                font-size: 13px;
+                font-weight: bold;
+                color: #2563eb;
+                background: #eff6ff;
+                padding: 6px 10px;
+                border-radius: 999px;
+                margin-bottom: 16px;
+            }
+
+            .day-card h2 {
+                font-size: 21px;
+                margin-bottom: 10px;
+            }
+
+            .day-card p {
+                color: #6b7280;
+                line-height: 1.6;
+                font-size: 14px;
+                margin-bottom: 20px;
+            }
+
+            .view-link {
+                color: #2563eb;
+                font-size: 14px;
+                font-weight: 600;
+            }
+
+            .day-card:hover .view-link {
+                text-decoration: underline;
+            }
+
+            @media (max-width: 800px) {
+                .day-list {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+            }
+
+            @media (max-width: 550px) {
+                .page-header {
+                    padding: 30px 16px 24px;
+                }
+
+                .page-header h1 {
+                    font-size: 28px;
+                }
+
+                .container {
+                    padding: 28px 16px;
+                }
+
+                .day-list {
+                    grid-template-columns: 1fr;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <header class="page-header">
+            <h1>F8 Bài tập về nhà</h1>
+            <p>Tổng hợp bài tập theo từng buổi học</p>
+        </header>
+
+        <main class="container">
+            <h2 class="section-title">Danh sách bài tập</h2>
+
+            <div class="day-list">
+                <a class="day-card" href="./f8-zoom-day34/">
+                    <span class="day-number">DAY 34</span>
+                    <h2>React cơ bản</h2>
+                    <p>
+                        Counter, Todo List, Profile Card, Product List, Comment
+                        System và Weather App.
+                    </p>
+                    <span class="view-link">Xem bài tập →</span>
+                </a>
+
+                <!--
+            Sau này học xong Day 35, copy card này:
+
+            <a class="day-card" href="./f8-zoom-day35/">
+                <span class="day-number">DAY 35</span>
+                <h2>Tên nội dung buổi học</h2>
+                <p>Mô tả ngắn các bài tập của Day 35.</p>
+                <span class="view-link">Xem bài tập →</span>
+            </a>
+            -->
+                <a
+                    href="https://datnguyen154.github.io/F8_BTVN/f8-zoom-day35/dist/"
+                >
+                    Day 35
+                </a>
+            </div>
+        </main>
+    </body>
 </html>

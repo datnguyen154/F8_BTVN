@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Weather App</title>
+
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f3f4f6;
+                color: #333;
+                padding: 40px 20px;
+            }
+
+            h1 {
+                text-align: center;
+                margin-bottom: 30px;
+            }
+
+            .weather-app {
+                max-width: 420px;
+                margin: 0 auto;
+                background-color: white;
+                padding: 24px;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+            }
+
+            select {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 20px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                font-size: 15px;
+            }
+
+            .weather-card {
+                text-align: center;
+            }
+
+            .weather-icon {
+                font-size: 60px;
+                margin-bottom: 10px;
+            }
+
+            .weather-card h2 {
+                margin-bottom: 16px;
+            }
+
+            .temperature {
+                font-size: 36px;
+                font-weight: bold;
+                margin-bottom: 16px;
+            }
+
+            .weather-card p {
+                margin-bottom: 10px;
+                font-size: 16px;
+            }
+
+            button {
+                margin-top: 14px;
+                padding: 10px 16px;
+                border: none;
+                border-radius: 5px;
+                background-color: #2563eb;
+                color: white;
+                font-size: 14px;
+                cursor: pointer;
+            }
+
+            button:hover {
+                background-color: #1d4ed8;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="root"></div>
+
+        <script
+            crossorigin
+            src="https://unpkg.com/react@18/umd/react.development.js"
+        ></script>
+
+        <script
+            crossorigin
+            src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+        ></script>
+
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+        <script type="text/babel">
+            const weatherData = {
+                hanoi: {
+                    city: "Hà Nội",
+                    temp: 28,
+                    weather: "Nắng",
+                    humidity: 65,
+                },
+
+                hcm: {
+                    city: "TP.HCM",
+                    temp: 32,
+                    weather: "Có mây",
+                    humidity: 78,
+                },
+
+                danang: {
+                    city: "Đà Nẵng",
+                    temp: 30,
+                    weather: "Mưa nhẹ",
+                    humidity: 82,
+                },
+            };
+
+            function WeatherApp() {
+                const [selectedCity, setSelectedCity] = React.useState("hanoi");
+
+                const [weather, setWeather] = React.useState(
+                    weatherData[selectedCity],
+                );
+
+                const getWeatherIcon = (weather) => {
+                    if (weather === "Nắng") {
+                        return "☀️";
+                    }
+
+                    if (weather === "Có mây") {
+                        return "🌤️";
+                    }
+
+                    if (weather === "Mưa nhẹ") {
+                        return "🌧️";
+                    }
+                };
+
+                const handleCityChange = (e) => {
+                    const cityKey = e.target.value;
+
+                    setSelectedCity(cityKey);
+                    setWeather(weatherData[cityKey]);
+                };
+
+                const handleRefresh = () => {
+                    const randomTemp = Math.floor(Math.random() * 11) - 5;
+                    const randomHumidity = Math.floor(Math.random() * 11) - 5;
+
+                    setWeather({
+                        ...weather,
+                        temp: weather.temp + randomTemp,
+                        humidity: weather.humidity + randomHumidity,
+                    });
+                };
+
+                return (
+                    <div className="weather-app">
+                        <select
+                            value={selectedCity}
+                            onChange={handleCityChange}
+                        >
+                            <option value="hanoi">Hà Nội</option>
+                            <option value="hcm">TP.HCM</option>
+                            <option value="danang">Đà Nẵng</option>
+                        </select>
+
+                        <div className="weather-card">
+                            <div className="weather-icon">
+                                {getWeatherIcon(weather.weather)}
+                            </div>
+
+                            <h2>{weather.city}</h2>
+
+                            <div className="temperature">{weather.temp}°C</div>
+
+                            <p>
+                                Thời tiết: <strong>{weather.weather}</strong>
+                            </p>
+
+                            <p>
+                                Độ ẩm: <strong>{weather.humidity}%</strong>
+                            </p>
+
+                            <button onClick={handleRefresh}>Làm mới</button>
+                        </div>
+                    </div>
+                );
+            }
+
+            const app = (
+                <>
+                    <h1>Weather App</h1>
+                    <WeatherApp />
+                </>
+            );
+
+            const root = ReactDOM.createRoot(document.getElementById("root"));
+
+            root.render(app);
+        </script>
+    </body>
+</html>
