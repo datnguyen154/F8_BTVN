@@ -1,0 +1,42 @@
+.dashboard {
+    padding: 32px;
+
+    h1 {
+        margin-bottom: 24px;
+        color: #1f2937;
+    }
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.card {
+    padding: 22px;
+
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+
+    h3 {
+        margin: 0 0 12px;
+        color: #6b7280;
+        font-size: 15px;
+    }
+
+    p {
+        margin: 0;
+
+        font-size: 28px;
+        font-weight: 700;
+        color: #2563eb;
+    }
+}
+
+@media (max-width: 700px) {
+    .cards {
+        grid-template-columns: 1fr;
+    }
+}

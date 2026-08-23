@@ -1,0 +1,28 @@
+.footer {
+    padding: 20px 24px;
+
+    background: #1f2937;
+    color: #9ca3af;
+
+    text-align: center;
+
+    p {
+        margin: 0 0 10px;
+    }
+}
+
+.links {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+
+    a {
+        color: #d1d5db;
+        text-decoration: none;
+
+        &:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
+    }
+}

@@ -1,0 +1,46 @@
+.users {
+    padding: 32px;
+
+    h1 {
+        margin-bottom: 24px;
+    }
+}
+
+.tableWrapper {
+    overflow-x: auto;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+
+    th,
+    td {
+        padding: 13px 16px;
+        border-bottom: 1px solid #e5e7eb;
+        text-align: left;
+    }
+
+    th {
+        background: #f3f4f6;
+        color: #374151;
+    }
+
+    tbody {
+        tr {
+            &:hover {
+                background: #f9fafb;
+            }
+
+            &:last-child {
+                td {
+                    border-bottom: none;
+                }
+            }
+        }
+    }
+}
