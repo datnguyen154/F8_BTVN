@@ -1,0 +1,16 @@
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    color: #1f2937;
+    text-decoration: none;
+    font-weight: 600;
+
+    img {
+        width: 38px;
+        height: 38px;
+        object-fit: contain;
+        border-radius: 10px;
+    }
+}
