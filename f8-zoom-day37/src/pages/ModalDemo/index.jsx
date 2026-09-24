@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import Modal from "../../components/Modal";
 import styles from "./ModalDemo.module.scss";
@@ -10,6 +10,8 @@ function ModalDemo() {
     const [noEscCloseOpen, setNoEscCloseOpen] = useState(false);
     const [customOpen, setCustomOpen] = useState(false);
     const [callbackOpen, setCallbackOpen] = useState(false);
+
+    const modalRef = useRef(null);
 
     return (
         <div className={styles.page}>
@@ -165,6 +167,37 @@ function ModalDemo() {
                         <p>Mở DevTools → Console để xem callback.</p>
 
                         <button onClick={() => setCallbackOpen(false)}>
+                            Đóng
+                        </button>
+                    </Modal>
+                </div>
+
+                {/* 7. Imperative Modal */}
+                <div className={styles.card}>
+                    <h2>Imperative Modal</h2>
+
+                    <p>Điều khiển Modal bằng ref.</p>
+
+                    <button onClick={() => modalRef.current?.open()}>
+                        Open
+                    </button>
+
+                    <button onClick={() => modalRef.current?.close()}>
+                        Close
+                    </button>
+
+                    <button onClick={() => modalRef.current?.toggle()}>
+                        Toggle
+                    </button>
+
+                    <Modal ref={modalRef}>
+                        <h3>Imperative Modal</h3>
+
+                        <p>
+                            Modal này được điều khiển bằng useImperativeHandle.
+                        </p>
+
+                        <button onClick={() => modalRef.current?.close()}>
                             Đóng
                         </button>
                     </Modal>

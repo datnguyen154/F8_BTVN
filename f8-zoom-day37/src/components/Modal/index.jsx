@@ -1,32 +1,62 @@
-import { useEffect, useState } from "react";
+import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
+
 import styles from "./Modal.module.scss";
 
-function Modal({
-    isOpen,
-    onAfterOpen,
-    onAfterClose,
-    onRequestClose,
+const Modal = forwardRef(function Modal(
+    {
+        isOpen = false,
+        onAfterOpen,
+        onAfterClose,
+        onRequestClose,
 
-    closeTimeoutMS = 0,
+        closeTimeoutMS = 0,
 
-    overlayClassName = "",
-    className = "",
+        overlayClassName = "",
+        className = "",
 
-    bodyOpenClassName = "modal-open",
-    htmlOpenClassName = "modal-open",
+        bodyOpenClassName = "modal-open",
+        htmlOpenClassName = "modal-open",
 
-    shouldCloseOnOverlayClick = true,
-    shouldCloseOnEsc = true,
+        shouldCloseOnOverlayClick = true,
+        shouldCloseOnEsc = true,
 
-    children,
-}) {
+        children,
+    },
+    ref,
+) {
     const [isMounted, setIsMounted] = useState(isOpen);
     const [isClosing, setIsClosing] = useState(false);
+    const [imperativeOpen, setImperativeOpen] = useState(false);
+
+    const actualIsOpen = isOpen || imperativeOpen;
+
+    const handleRequestClose = () => {
+        setImperativeOpen(false);
+        onRequestClose?.();
+    };
+
+    useImperativeHandle(ref, () => ({
+        open() {
+            setImperativeOpen(true);
+        },
+
+        close() {
+            handleRequestClose();
+        },
+
+        toggle() {
+            if (actualIsOpen) {
+                handleRequestClose();
+            } else {
+                setImperativeOpen(true);
+            }
+        },
+    }));
 
     useEffect(() => {
         let timer;
 
-        if (isOpen) {
+        if (actualIsOpen) {
             timer = setTimeout(() => {
                 setIsMounted(true);
                 setIsClosing(false);
@@ -52,10 +82,10 @@ function Modal({
         }
 
         return () => clearTimeout(timer);
-    }, [isOpen, isMounted, closeTimeoutMS, onAfterOpen, onAfterClose]);
+    }, [actualIsOpen, isMounted, closeTimeoutMS, onAfterOpen, onAfterClose]);
 
     useEffect(() => {
-        if (!isOpen) {
+        if (!actualIsOpen) {
             return;
         }
 
@@ -64,7 +94,7 @@ function Modal({
 
         const handleKeyDown = (e) => {
             if (e.key === "Escape" && shouldCloseOnEsc) {
-                onRequestClose?.();
+                handleRequestClose();
             }
         };
 
@@ -77,7 +107,7 @@ function Modal({
             document.removeEventListener("keydown", handleKeyDown);
         };
     }, [
-        isOpen,
+        actualIsOpen,
         bodyOpenClassName,
         htmlOpenClassName,
         shouldCloseOnEsc,
@@ -90,7 +120,7 @@ function Modal({
 
     const handleOverlayClick = () => {
         if (shouldCloseOnOverlayClick) {
-            onRequestClose?.();
+            handleRequestClose();
         }
     };
 
@@ -119,6 +149,6 @@ function Modal({
             </div>
         </div>
     );
-}
+});
 
 export default Modal;
