@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <title>Redux Core Demo</title>
+
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                padding: 40px;
+            }
+
+            .container {
+                max-width: 500px;
+                margin: 0 auto;
+            }
+
+            .counter {
+                font-size: 48px;
+                font-weight: bold;
+                margin-bottom: 24px;
+            }
+
+            .actions {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 12px;
+            }
+
+            button {
+                padding: 10px 16px;
+                border: 1px solid #ccc;
+                border-radius: 8px;
+                cursor: pointer;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="container">
+            <h1>Redux Core Counter</h1>
+
+            <div id="counter" class="counter">0</div>
+
+            <div class="actions">
+                <button id="increase">Increase</button>
+                <button id="decrease">Decrease</button>
+                <button id="reset">Reset</button>
+                <button id="remove-listener">Remove Listener</button>
+            </div>
+        </div>
+
+        <script type="module">
+            import { createStore } from "./redux.js";
+
+            function counterReducer(state = 0, action) {
+                switch (action.type) {
+                    case "INCREASE":
+                        return state + 1;
+
+                    case "DECREASE":
+                        return state - 1;
+
+                    case "RESET":
+                        return 0;
+
+                    default:
+                        return state;
+                }
+            }
+
+            const store = createStore(counterReducer);
+
+            const counterElement = document.getElementById("counter");
+            const increaseButton = document.getElementById("increase");
+            const decreaseButton = document.getElementById("decrease");
+            const resetButton = document.getElementById("reset");
+            const removeListenerButton =
+                document.getElementById("remove-listener");
+
+            function render() {
+                const state = store.getState();
+
+                counterElement.textContent = state;
+
+                console.log("Current state:", state);
+            }
+
+            const unsubscribe = store.subscribe(render);
+
+            render();
+
+            increaseButton.addEventListener("click", () => {
+                store.dispatch({
+                    type: "INCREASE",
+                });
+
+                console.log("State after INCREASE:", store.getState());
+            });
+
+            decreaseButton.addEventListener("click", () => {
+                store.dispatch({
+                    type: "DECREASE",
+                });
+
+                console.log("State after DECREASE:", store.getState());
+            });
+
+            resetButton.addEventListener("click", () => {
+                store.dispatch({
+                    type: "RESET",
+                });
+
+                console.log("State after RESET:", store.getState());
+            });
+
+            removeListenerButton.addEventListener("click", () => {
+                unsubscribe();
+
+                console.log("Listener removed");
+            });
+        </script>
+    </body>
+</html>

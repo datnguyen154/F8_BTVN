@@ -1,0 +1,23 @@
+.page {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 24px;
+}
+
+.error {
+    margin-bottom: 16px;
+    color: red;
+}
+
+.cancel {
+    margin-top: 12px;
+    padding: 10px 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    cursor: pointer;
+
+    &:disabled {
+        cursor: not-allowed;
+        opacity: 0.6;
+    }
+}

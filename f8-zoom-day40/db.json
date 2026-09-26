@@ -1,0 +1,9 @@
+{
+  "tasks": [
+    {
+      "title": "redux",
+      "id": "dtgpMgc0tvw"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
