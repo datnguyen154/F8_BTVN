@@ -1,0 +1,4 @@
+const NAMESPACE = "ui";
+
+export const SHOW_LOADING = `${NAMESPACE}/SHOW_LOADING`;
+export const HIDE_LOADING = `${NAMESPACE}/HIDE_LOADING`;
